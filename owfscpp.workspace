@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Workspace">
+		<Project filename="owfscpp.cbp" />
+		<Project filename="owfscpp - Example1.cbp" />
+		<Project filename="owfscpp - Example2.cbp" />
+		<Project filename="owfscpp - Example3.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

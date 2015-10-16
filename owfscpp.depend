@@ -1,0 +1,81 @@
+# depslib dependency file v1.0
+1443993341 source:d:\sources\simplesock\src\simplesock.cpp
+	<iostream>
+	<exception>
+	"SimpleSock.h"
+
+1405374246 d:\sources\simplesock\include\simplesock.h
+	<string>
+	<fstream>
+	<sstream>
+	<sys/socket.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+
+1405713913 source:d:\sources\simplesock\test\main.cpp
+	<iostream>
+	"SimpleSock.h"
+	<Windows.h>
+
+1443995091 d:\sources\simplesock\src\simplesock.h
+	<string>
+	<cstring>
+	<fstream>
+	<sstream>
+	<exception>
+	<cerrno>
+	<sys/ioctl.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<net/if.h>
+	<fcntl.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+
+1445028314 source:d:\sources\owfscpp\src\owfscpp.cpp
+	<iostream>
+	<cstring>
+	"owfscpp.h"
+
+1444945393 d:\sources\owfscpp\src\owfscpp.h
+	<list>
+	"SimpleSock.h"
+
+1444945347 source:d:\sources\owfscpp\test\main.cpp
+	<iostream>
+	<string>
+	<algorithm>
+	"owfscpp.h"
+	<Windows.h>
+
+1444338974 d:\sources\owfscpp\src\simplesock.h
+	<string>
+	<cstring>
+	<fstream>
+	<sstream>
+	<exception>
+	"SafeFunctions.h"
+	<cerrno>
+	<sys/ioctl.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<net/if.h>
+	<fcntl.h>
+	<unistd.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+
+1444074021 source:d:\sources\owfscpp\src\simplesock.cpp
+	<iostream>
+	<exception>
+	"SimpleSock.h"
+
+1444937558 d:\sources\owfscpp\src\safefunctions.h
+	<string.h>
+	<cstdint>
+	<stddef.h>
+	<errno.h>
+
+1444937548 source:d:\sources\owfscpp\src\safefunctions.cpp
+	"SafeFunctions.h"
+

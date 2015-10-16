@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1443823703 source:d:\sources\simplesock\src\simplesock.cpp
+	<iostream>
+	<exception>
+	"SimpleSock.h"
+
+1443823620 d:\sources\simplesock\src\simplesock.h
+	<string>
+	<fstream>
+	<sstream>
+	<exception>
+	<sys/socket.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+
+1443904077 source:d:\sources\owfscpp\src\owfscpp.cpp
+	<iostream>
+	"owfscpp.h"
+
+1443822956 d:\sources\owfscpp\src\owfscpp.h
+	<list>
+	"../../SimpleSock/src/SimpleSock.h"
+
+1443906303 source:d:\sources\owfscpp\examples\example3.cpp
+	<iostream>
+	"owfscpp.h"
+

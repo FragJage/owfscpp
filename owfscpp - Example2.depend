@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1422999575 source:d:\sources\simplesock\src\simplesock.cpp
+	<iostream>
+	<exception>
+	"SimpleSock.h"
+
+1422999003 d:\sources\simplesock\src\simplesock.h
+	<string>
+	<fstream>
+	<sstream>
+	<exception>
+	<sys/socket.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+
+1422914678 source:d:\sources\simplesock\examples\example2.cpp
+	<iostream>
+	"SimpleSock.h"
+
