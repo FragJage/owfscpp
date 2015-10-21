@@ -102,6 +102,7 @@ void TestsUnitaire(owfscpp owfsClient, bool persistence)
     string sValue;
     string sLstDir;
     string sLstDirSlash;
+    float fValue;
     int iValue;
     unsigned flags;
     bool ok,ok2;
@@ -138,11 +139,12 @@ void TestsUnitaire(owfscpp owfsClient, bool persistence)
     sLstDirSlash.erase(sLstDirSlash.size()-1);
 
     sValue = owfsClient.Read(TemperatureDevice+"/temperature9");
-    iValue = atoi(sValue.c_str());
+    fValue = atof(sValue.c_str());
+    iValue = int(fValue*10+0.5);
     ok = true;
     if(iValue==0) ok = false;       //Modéremment risqué
-    if(iValue<-55) ok = false;
-    if(iValue>125) ok = false;
+    if(iValue<-550) ok = false;
+    if(iValue>1250) ok = false;
     Resultat("Test de la methode Read", ok);
 
     ok = owfsClient.Present(TemperatureDevice);
@@ -152,16 +154,16 @@ void TestsUnitaire(owfscpp owfsClient, bool persistence)
     sValue = owfsClient.Get("/");
     Resultat("Test 1 de la methode Get", sValue==sLstDir);
     sValue = owfsClient.Get(TemperatureDevice+"/temperature9");
-    Resultat("Test 2 de la methode Get", atoi(sValue.c_str())==iValue);
+    Resultat("Test 2 de la methode Get", int(atof(sValue.c_str())*10+0.5)==iValue);
 
     sValue = owfsClient.GetSlash("/");
     Resultat("Test 1 de la methode GetSlash", sValue==sLstDirSlash);
     sValue = owfsClient.GetSlash(TemperatureDevice+"/temperature9");
-    Resultat("Test 2 de la methode GetSlash", atoi(sValue.c_str())==iValue);
+    Resultat("Test 2 de la methode GetSlash", int(atof(sValue.c_str())*10+0.5)==iValue);
 
     owfsClient.SetTemperatureScale(owfsClient.Fahrenheit);
     sValue = owfsClient.Get(TemperatureDevice+"/temperature9");
-    Resultat("Test de la methode SetTemperatureScale", (atoi(sValue.c_str())<iValue*1.95+32)&&(atoi(sValue.c_str())>iValue*1.65+32));
+    Resultat("Test de la methode SetTemperatureScale", (atof(sValue.c_str())<fValue*1.81+32)&&(atof(sValue.c_str())>fValue*1.79+32));
 
     owfsClient.SetDeviceDisplay(owfsClient.FaPtIdPtCo);
     sValue = owfsClient.GetSlash("/");
@@ -183,7 +185,6 @@ void TestsUnitaire(owfscpp owfsClient, bool persistence)
         string sValueSet;
 
         sValueMemo = owfsClient.Get(PIODevice+"/PIO.B");
-
         if(sValueMemo=="0")
             sValueSet = "1";
         else
