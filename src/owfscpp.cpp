@@ -232,7 +232,7 @@ void owfscpp::SendMessage(unsigned message, const string& path, const string& va
 
 
     length = path.size()+1;
-    if(value!="") length += value.size();
+    if(value!="") length += value.size()+1;
     total = length + 6*4;
     sendBuffer = new char[total+1];
     pos = sendBuffer;
@@ -245,8 +245,13 @@ void owfscpp::SendMessage(unsigned message, const string& path, const string& va
     else
         pos = WriteInt32(pos, 1024);
     pos = WriteInt32(pos, 0);
-    strcpy_s(pos, total+1, path.c_str());
-    if(value!="") strcpy_s(pos+path.size()+1, total-path.size(), value.c_str());
+    length = total+1-6*4;
+    strcpy_s(pos, length, path.c_str());
+    if(value!="")
+    {
+        length = length-(path.size()+1);
+        strcpy_s(pos+path.size()+1, length, value.c_str());
+    }
 
     try
     {
@@ -279,15 +284,17 @@ string owfscpp::RecvBlock()
         if(m_OwfsSock.Recv(header, sizeof(header))!=24)
             throw owfscpp::Exception(0x0002, "owfscpp::RecvBlock : Error while reading the header");
 
-        //cout << "Version : " << ReadInt32(header, 1) << endl;
-        //cout << "PayLoad : " << ReadInt32(header, 2) << endl;
-        //cout << "Return : " << ReadInt32(header, 3) << endl;
-        //cout << "Control : " << ReadInt32(header, 4) << endl;
-        //cout << "Size : " << ReadInt32(header, 5) << endl;
-        //cout << "Offset : " << ReadInt32(header, 6) << endl;
-
         err = ReadInt32(header, 3);
-        if(err<0) throw owfscpp::Exception(0x0003, "owfscpp::RecvBlock : Error return by owserver", err);
+        if(err<0)
+        {
+            //cout << "Version : " << ReadInt32(header, 1) << endl;
+            //cout << "PayLoad : " << ReadInt32(header, 2) << endl;
+            //cout << "Return : " << ReadInt32(header, 3) << endl;
+            //cout << "Control : 0x" << hex << ReadInt32(header, 4) << dec << endl;
+            //cout << "Size : " << ReadInt32(header, 5) << endl;
+            //cout << "Offset : " << ReadInt32(header, 6) << endl;
+            throw owfscpp::Exception(0x0003, "owfscpp::RecvBlock : Error return by owserver", err);
+        }
 
         if(m_Persistence)
         {
