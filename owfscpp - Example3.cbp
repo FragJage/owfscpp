@@ -27,10 +27,12 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="examples/example3.cpp" />
-		<Unit filename="src/owfscpp.cpp" />
-		<Unit filename="src/owfscpp.h" />
+		<Unit filename="src/SafeFunctions.cpp" />
+		<Unit filename="src/SafeFunctions.h" />
 		<Unit filename="src/SimpleSock.cpp" />
 		<Unit filename="src/SimpleSock.h" />
+		<Unit filename="src/owfscpp.cpp" />
+		<Unit filename="src/owfscpp.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -11,7 +11,7 @@ else
 endif
 
 ifeq ($(mode),debug)
-  CFLAGS += -O0 -g -ggdb3 -Wall -Wextra -pedantic -pedantic-errors -Wmain -Weffc++ -Wswitch-default -Wswitch-enum -Wmissing-declarations -Wunreachable-code -Wfloat-equal -Wundef -Wcast-align -Wredundant-decls -Winit-self -Wshadow -Wnon-virtual-dtor
+  CFLAGS += -O0 -g -ggdb3 -Wall -Wextra -pedantic -pedantic-errors -Wmain -Weffc++ -Wswitch-default -Wswitch-enum -Wmissing-declarations -Wunreachable-code -Wfloat-equal -Wundef -Wredundant-decls -Winit-self -Wshadow -Wnon-virtual-dtor
 else
   CFLAGS += -O2 -s 
 endif
@@ -20,10 +20,10 @@ CFLAGS+= -DLINUX -Isrc
 LDFLAGS=-lm
 
 VPATH = src:test:examples
-OBJS_test = owfscpp.o SimpleSock.o main.o
-OBJS_example1  = owfscpp.o SimpleSock.o example1.o
-OBJS_example2  = owfscpp.o SimpleSock.o example2.o
-OBJS_example3  = owfscpp.o SimpleSock.o example3.o
+OBJS_test = owfscpp.o SimpleSock.o SafeFunctions.o main.o
+OBJS_example1  = owfscpp.o SimpleSock.o SafeFunctions.o example1.o
+OBJS_example2  = owfscpp.o SimpleSock.o SafeFunctions.o example2.o
+OBJS_example3  = owfscpp.o SimpleSock.o SafeFunctions.o example3.o
 
 all:	    unittest example1 example2 example3
 
@@ -37,7 +37,7 @@ example3: $(OBJS_example3)
 	        g++ -o $@ $(OBJS_example3) $(CFLAGS) $(LDFLAGS)
 
 clean:
-	    rm -f test example1 example2 example3 $(OBJS_test)
+	    rm -f unittest example1 example2 example3 $(OBJS_test)
 
 .cpp.o:
 	    g++ $(CFLAGS) -c $<
