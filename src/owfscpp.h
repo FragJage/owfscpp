@@ -245,6 +245,9 @@ public:
     std::string GetSlash(const std::string& path);
 
 private:
+    std::string ReadSkip85(const std::string& path, bool skipBug85);
+    std::string GetSkip85(const std::string& path, bool skipBug85);
+    std::string SkipBug85(const std::string& path, const std::string& value, bool isGet);
     void Connect();
     void Close();
     void WaitRecv();

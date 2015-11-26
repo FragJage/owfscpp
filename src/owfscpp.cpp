@@ -282,7 +282,10 @@ string owfscpp::RecvBlock()
         int err;
 
         if(m_OwfsSock.Recv(header, sizeof(header))!=24)
+        {
+            Close();
             throw owfscpp::Exception(0x0002, "owfscpp::RecvBlock : Error while reading the header");
+        }
 
         err = ReadInt32(header, 3);
         if(err<0)
@@ -293,6 +296,7 @@ string owfscpp::RecvBlock()
             //cout << "Control : 0x" << hex << ReadInt32(header, 4) << dec << endl;
             //cout << "Size : " << ReadInt32(header, 5) << endl;
             //cout << "Offset : " << ReadInt32(header, 6) << endl;
+            Close();
             throw owfscpp::Exception(0x0003, "owfscpp::RecvBlock : Error return by owserver", err);
         }
 
@@ -400,6 +404,16 @@ void owfscpp::Write(const string& path, const string& value)
 
 string owfscpp::Read(const string& path)
 {
+    return ReadSkip85(path, true);
+}
+
+string owfscpp::Get(const string& path)
+{
+    return GetSkip85(path, true);
+}
+
+string owfscpp::ReadSkip85(const string& path, bool skipBug85)
+{
     string value;
 
     Connect();
@@ -408,10 +422,12 @@ string owfscpp::Read(const string& path)
     value = RecvBlock();
     Close();
 
+    if(skipBug85) value = SkipBug85(path, value, false);
+
     return value;
 }
 
-string owfscpp::Get(const string& path)
+string owfscpp::GetSkip85(const string& path, bool skipBug85)
 {
     string value;
 
@@ -421,7 +437,34 @@ string owfscpp::Get(const string& path)
     value = RecvBlock();
     Close();
 
+    if(skipBug85) value = SkipBug85(path, value, true);
+
     return value;
+}
+
+string owfscpp::SkipBug85(const string& path, const string& value, bool isGet)
+{
+    size_t lastSlash;
+    bool isReadUncached;
+    string newValue;
+
+    if(value!="85") return value;
+
+    lastSlash = path.find_last_of("/", path.length()-2);
+    if(lastSlash==string::npos) return value;
+
+    if(path.substr(lastSlash+1, 11)!="temperature") return value;
+
+    isReadUncached = (m_ControlFlags & 0xFFFFFFDF) > 0;
+    if(!isReadUncached) SetOwserverFlag(owfscpp::Uncached, true);
+    if(isGet)
+        newValue = GetSkip85(path, false);
+    else
+        newValue = ReadSkip85(path, false);
+    if(!isReadUncached) SetOwserverFlag(owfscpp::Uncached, false);
+    if(newValue=="85") throw owfscpp::Exception(0x0003, "owfscpp::Read : Unable to read temperature, always at 85");;
+
+    return newValue;
 }
 
 string owfscpp::GetSlash(const string& path)
