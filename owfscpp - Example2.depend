@@ -17,3 +17,43 @@
 	<iostream>
 	"SimpleSock.h"
 
+1445457328 source:d:\sources\owfscpp\src\owfscpp.cpp
+	<iostream>
+	<cstring>
+	"owfscpp.h"
+
+1445026073 d:\sources\owfscpp\src\owfscpp.h
+	<list>
+	"SimpleSock.h"
+
+1444853795 d:\sources\owfscpp\src\simplesock.h
+	<string>
+	<cstring>
+	<fstream>
+	<sstream>
+	<exception>
+	"SafeFunctions.h"
+	<cerrno>
+	<sys/ioctl.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<net/if.h>
+	<fcntl.h>
+	<unistd.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+
+1444766078 d:\sources\owfscpp\src\safefunctions.h
+	<string.h>
+	<cstdint>
+	<stddef.h>
+	<errno.h>
+
+1444766088 source:d:\sources\owfscpp\src\safefunctions.cpp
+	"SafeFunctions.h"
+
+1444853766 source:d:\sources\owfscpp\src\simplesock.cpp
+	<iostream>
+	<exception>
+	"SimpleSock.h"
+

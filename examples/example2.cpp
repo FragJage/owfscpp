@@ -34,8 +34,18 @@ int main()
     }
 
     //Read temperature
-    buffer = owfsClient.Read(TemperatureDevice+"/temperature9");
+    buffer = owfsClient.Read(TemperatureDevice+"/temperature");
     cout << "The temperature of the device " << TemperatureDevice << " is " << buffer << "." << endl;
+
+    //Read all members of this device
+    list<string> lstMember;
+    list<string>::iterator iMember;
+
+    lstMember = owfsClient.DirAll(TemperatureDevice);
+    for(iMember = lstMember.begin(); iMember != lstMember.end(); ++iMember)
+    {
+        cout << *iMember << endl;
+    }
 
     cin >> buffer;
     return 0;
