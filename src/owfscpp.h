@@ -91,7 +91,7 @@
 #define owfscpp_H
 
 #include <list>
-#include "SimpleSock.h"
+#include "SimpleSockTCP.h"
 
 /// \brief    Simple cpp class 1-wire interface
 /// \details  Simple class to communicate with owserver, the backend component of the OWFS 1-wire bus control system.
@@ -177,6 +177,11 @@ public:
     /// \param    port           Port TCP address of owserver.
     /// \details  Define IP address and TCP port of owserver.
     void Initialisation(std::string server, unsigned port);
+
+    /// \brief    Define network timeout
+    /// \param    timeout           Delay in ms.
+    /// \details  Define network timeout for connect, send and receive.
+    void SetTimeout(unsigned timeout);
 
     /// \brief    Enable/Disable owserver flag
     /// \param    flag           enum Owserver Flag

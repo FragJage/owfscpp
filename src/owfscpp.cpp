@@ -30,6 +30,8 @@ using namespace std;
 /***************************************************************************************************/
 owfscpp::owfscpp(string server, unsigned port) : m_OwfsServer(server), m_OwfsPort(port), m_Timeout(5000000), m_Version(0), m_ControlFlags(0x00000100), m_Persistence(false), m_PersistenceMode(PERSISTENCE_CLOSE), m_OwfsSock()
 {
+    int sockTimeout = m_Timeout/1000000;
+    m_OwfsSock.SetTimeout(sockTimeout, sockTimeout);
 }
 
 owfscpp::~owfscpp()
@@ -70,6 +72,14 @@ void owfscpp::SetOwserverFlag(OwserverFlag flag, bool active)
         default :
             throw owfscpp::Exception(0x0101, "owfscpp::SetOwserverFlag : Unknown enum value");
     }
+}
+
+void owfscpp::SetTimeout(unsigned timeout)
+{
+    m_Timeout = timeout*1000;
+    int sockTimeout = timeout/1000;
+    if(sockTimeout == 0) sockTimeout = 1;
+    m_OwfsSock.SetTimeout(sockTimeout, sockTimeout, sockTimeout);
 }
 
 unsigned owfscpp::GetOwserverFlags()
@@ -192,6 +202,7 @@ void owfscpp::Initialisation(string server, unsigned port)
 void owfscpp::Connect()
 {
     if((m_Persistence==true)&&(m_PersistenceMode==PERSISTENCE_OPEN)) return;
+    m_OwfsSock.Blocking(false);
     m_OwfsSock.Connect(m_OwfsServer, m_OwfsPort);
     if(m_Persistence==true) m_PersistenceMode = PERSISTENCE_OPEN;
 }
@@ -409,7 +420,8 @@ string owfscpp::Read(const string& path)
 
 string owfscpp::Get(const string& path)
 {
-    return GetSkip85(path, true);
+    string v = GetSkip85(path, true);
+    return v;
 }
 
 string owfscpp::ReadSkip85(const string& path, bool skipBug85)
